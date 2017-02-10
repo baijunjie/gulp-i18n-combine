@@ -1,0 +1,23 @@
+{
+  "name": "gulp-i18n-combine",
+  "version": "1.0.0",
+  "description": "国际化语言包合并",
+  "main": "index.js",
+  "dependencies": {
+    "through2": "^2.0.1",
+    "gulp-util": "^3.0.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baijunjie/gulp-i18n-combine.git"
+  },
+  "author": "baijunjie",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/baijunjie/gulp-i18n-combine/issues"
+  },
+  "homepage": "https://github.com/baijunjie/gulp-i18n-combine#readme"
+}
