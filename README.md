@@ -12,14 +12,10 @@ $ npn install gulp-i18n-combine --save-dev
 
 ```js
 var gulp = require('gulp'),
-	i18n = require('gulp-i18n-combine'),
-	clean = require('gulp-clean');
+	i18n = require('gulp-i18n-combine');
 
 gulp.task('i18n', function () {
-	gulp.src('./dist/i18n', { read: false })
-		.pipe(clean());
-
-	gulp.src('./src/i18n/**/*.json')
+	return gulp.src('./src/i18n/**/*.json')
 		.pipe(i18n())
 		.pipe(gulp.dest('./dist/i18n'));
 });
