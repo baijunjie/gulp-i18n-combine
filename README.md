@@ -8,7 +8,68 @@
 $ npn install gulp-i18n-combine --save-dev
 ```
 
-### Example
+### 合并分为两种模式：
+
+#### mod: 1（默认值）
+
+gulpfile.js
+
+```js
+var gulp = require('gulp'),
+	i18n = require('gulp-i18n-combine');
+
+gulp.task('i18n', ['i18nClean'], function () {
+	return gulp.src('./src/**/zh-CN.json')
+		.pipe(i18n()) // 默认采用模式1
+		.pipe(gulp.dest('./dist/i18n/'));
+});
+
+gulp.task('default', ['i18n']);
+```
+
+对应源文件目录结构
+
+```
+└── src
+    ├── components
+    │   ├── header.vue
+    │   ├── footer.vue
+    │   ├── en-US.json
+    │   └── zh-CN.json
+    └── pages
+        ├── home
+        │   ├── home.vue
+        │   ├── en-US.json
+        │   └── zh-CN.json
+        ├── foo
+        │   ├── foo.vue
+        │   ├── en-US.json
+        │   └── zh-CN.json
+        └── bar
+            ├── bar.vue
+            ├── en-US.json
+            └── zh-CN.json
+```
+
+单文件内容
+
+```json
+// src/components/zh-CN.json
+{
+    "header": "头部",
+    "footer": "脚部"
+}
+
+// src/pages/foo/zh-CN.json
+{
+    "name": "foo",
+    "title": "欢迎来到 Foo"
+}
+```
+
+#### mod: 2
+
+gulpfile.js
 
 ```js
 var gulp = require('gulp'),
@@ -16,56 +77,83 @@ var gulp = require('gulp'),
 
 gulp.task('i18n', function () {
 	return gulp.src('./src/i18n/**/*.json')
-		.pipe(i18n())
-		.pipe(gulp.dest('./dist/i18n'));
+		.pipe(i18n({ mod: 2 })) // 采用模式2
+		.pipe(gulp.dest('./dist/i18n/'));
 });
 
 gulp.task('default', ['i18n']);
 ```
 
-### File structure
+对应源文件目录结构
 
 ```
-├── src
-│   └── i18n
-│       ├── en
-│       │   ├── menu.json
-│       │   └── home.json
-│       └── zh
-│           ├── menu.json
-│           └── home.json
-└── dist
+└── src
     └── i18n
-        ├── en.json
-        └── zh.json
+        ├── en-US
+        │   ├── components.json
+        │   └── pages
+        │       ├── home.json
+        │       ├── foo.json
+        │       └── bar.json
+        └── zh-CN
+            ├── components.json
+            └── pages
+                ├── home.json
+                ├── foo.json
+                └── bar.json
 ```
 
-### Json structure
+单文件内容
 
 ```json
-// menu.json
+// src/i18n/zh-CN/components.json
 {
-	"menu1": "菜单1",
-	"menu2": "菜单2"
+    "header": "头部",
+    "footer": "脚部"
 }
 
-// home.json
+// src/i18n/zh-CN/pages/foo.json
 {
-	"home": "首页",
-	"welcome": "欢迎"
+    "name": "foo",
+    "title": "欢迎来到 Foo"
 }
+```
 
-// zh.json
+### 最终输出结果
+
+输出后文件目录结构
+
+```
+└── dist
+    └── i18n
+        ├── en-US.json
+        └── zh-CN.json
+```
+
+输出后文件内容
+
+```json
+// zh-CN.json
 {
-	"menu": {
-		"menu1": "菜单1",
-		"menu2": "菜单2"
-	},
+    "components": {
+        "header": "头部",
+        "footer": "脚部"
+    },
 
-	"home": {
-		"home": "首页",
-		"welcome": "欢迎"
-	}
+    "pages": {
+        "home": {
+            "name": "home",
+            "title": "欢迎来到 Home"
+        },
+        "foo": {
+            "name": "foo",
+            "title": "欢迎来到 Foo"
+        },
+        "bar": {
+            "name": "bar",
+            "title": "欢迎来到 Bar"
+        }
+    }
 }
 ```
 

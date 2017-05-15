@@ -1,32 +1,44 @@
 const through = require('through2');
 const Gutil = require('gulp-util');
 
+let defaultOptions = {
+	mod: 1
+};
+
 module.exports = function (options) {
+	options = Object.assign({}, defaultOptions, options);
 
 	const i18n = {};
 
 	const parse = function(file, encoding, next) {
 
-		const relativeParts = file.relative.split('/');
-		const locale = relativeParts.shift(); // 语言包名
-		i18n[locale] = i18n[locale] || {};
+		let relativeParts, fileName;
+		// 剔除文件名
+		if (options.mod == 1) {
+			relativeParts = file.relative.split(/[\\,/]/);
+			fileName = relativeParts.pop();
+		} else if (options.mod == 2)  {
+			relativeParts = file.relative.replace(/\.[^.]*$/, '').split(/[\\,/]/);
+			fileName = relativeParts.shift() + '.json';
+		} else {
+			throw new Error('options.mod Error!');
+		}
 
-		let child = i18n[locale];
-		Object.values(relativeParts).forEach((value) => {
-			value = value.replace(/\.[^.]*$/, '');
-			child = child[value] = child[value] || {};
+		let namespace = i18n[fileName] = i18n[fileName] || {};
+		relativeParts.forEach((value) => {
+			namespace = namespace[value] = namespace[value] || {};
 		});
 
-		Object.assign(child, JSON.parse(file.contents.toString())); // 解析为 JSON 会去除到文本中的空格与换行符
+		Object.assign(namespace, JSON.parse(file.contents.toString())); // 解析为 JSON 会去除到文本中的空格与换行符
 
 		next();
 	};
 
 	const flush = function(cb) {
-		Object.keys(i18n).forEach((locale) => {
+		Object.keys(i18n).forEach((fileName) => {
 			this.push(new Gutil.File({
-				path: locale + '.json',
-				contents: new Buffer(JSON.stringify(i18n[locale]))
+				path: fileName,
+				contents: new Buffer(JSON.stringify(i18n[fileName]))
 			}));
 		});
 
