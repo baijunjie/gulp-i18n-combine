@@ -29,7 +29,10 @@ module.exports = function (options) {
 			namespace = namespace[value] = namespace[value] || {};
 		});
 
-		Object.assign(namespace, JSON.parse(file.contents.toString())); // 解析为 JSON 会去除到文本中的空格与换行符
+		let fileContents = file.contents.toString();
+		if (fileContents) {
+			Object.assign(namespace, JSON.parse(fileContents)); // 解析为 JSON 会去除到文本中的空格与换行符
+		}
 
 		next();
 	};
