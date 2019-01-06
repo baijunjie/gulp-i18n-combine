@@ -1,5 +1,5 @@
 const through = require('through2');
-const Gutil = require('gulp-util');
+const gulpUtil = require('gulp-util');
 
 let defaultOptions = {
 	mod: 1
@@ -13,7 +13,7 @@ module.exports = function (options) {
 	const parse = function(file, encoding, next) {
 
 		let relativeParts, fileName;
-		// 剔除文件名
+
 		if (options.mod == 1) {
 			relativeParts = file.relative.split(/[\\,/]/);
 			fileName = relativeParts.pop();
@@ -43,9 +43,9 @@ module.exports = function (options) {
 
 	const flush = function(cb) {
 		Object.keys(i18n).forEach((fileName) => {
-			this.push(new Gutil.File({
+			this.push(new gulpUtil.File({
 				path: fileName,
-				contents: new Buffer(JSON.stringify(i18n[fileName]))
+				contents: new Buffer.from(JSON.stringify(i18n[fileName]))
 			}));
 		});
 

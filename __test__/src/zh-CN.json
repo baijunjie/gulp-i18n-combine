@@ -1,0 +1,15 @@
+{
+	"common": {
+        "hint": "提示",
+        "ok": "确认",
+        "cancel": "取消",
+        "loading": "加载中...",
+        "sending": "发送中...",
+		"iam": "我是"
+	},
+
+	"menu": {
+		"goToFoo": "跳转到 Foo",
+		"goToBar": "跳转到 Bar"
+	}
+}

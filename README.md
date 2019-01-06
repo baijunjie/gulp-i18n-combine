@@ -4,11 +4,13 @@
 
 ### install
 
-```
+```sh
 $ npn install gulp-i18n-combine --save-dev
 ```
 
-### 合并分为两种模式：
+
+
+## 合并时对应的目录结构分为两种模式
 
 #### mod: 1（默认值）
 
@@ -27,7 +29,7 @@ gulp.task('i18n', ['i18nClean'], function () {
 gulp.task('default', ['i18n']);
 ```
 
-对应源文件目录结构
+**`mod:1`** 对应源文件目录结构
 
 ```
 └── src
@@ -67,7 +69,7 @@ gulp.task('default', ['i18n']);
 }
 ```
 
-#### mod: 2
+### mod: 2
 
 gulpfile.js
 
@@ -84,7 +86,7 @@ gulp.task('i18n', function () {
 gulp.task('default', ['i18n']);
 ```
 
-对应源文件目录结构
+**`mod:2`** 对应源文件目录结构
 
 ```
 └── src
@@ -119,7 +121,9 @@ gulp.task('default', ['i18n']);
 }
 ```
 
-### 最终输出结果
+
+
+## 最终输出结果
 
 输出后文件目录结构
 

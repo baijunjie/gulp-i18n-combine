@@ -1,0 +1,8 @@
+{
+	"name": "Foo",
+    "defaultBtn": "默认按钮",
+    "primaryBtn": "主要按钮",
+    "textBtn": "文字按钮",
+    "touchMe": "点我！",
+    "submitForm": "提交表单: {msg}"
+}

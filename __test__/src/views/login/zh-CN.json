@@ -1,0 +1,9 @@
+{
+	"name": "登录",
+    "title": "管理系统",
+    "userName": "用户名",
+    "password": "密码",
+    "login": "登录",
+    "userNameNotEmpty": "用户名不能为空",
+    "passwordNotEmpty": "密码不能为空"
+}
